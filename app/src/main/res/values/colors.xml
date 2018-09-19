@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fdbc3d</color>
+    <color name="colorPrimaryDark">#fdbc3d</color>
+    <color name="colorAccent">#fe5b5a</color>
+    <color name="navigation_back">#242422</color>
+</resources>
