@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +30,16 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Dynamic menu on navigationview
+        Menu m = navigationView.getMenu();
+        m.add("Bookings");
+        m.add("Support");
+        m.add("Share");
+        m.add("Login");
+
+        //set perticular item to be open from navigationview menu at startup
+        onNavigationItemSelected(navigationView.getMenu().getItem(3));
     }
 
     @Override
@@ -41,42 +52,26 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.booking) {
-            // Handle the camera action
-        } else if (id == R.id.support) {
-
-        } else if (id == R.id.share) {
-
-        } else if (id == R.id.login) {
-
+        String name = item.getTitle().toString();
+        switch (name)
+        {
+            case "Bookings":
+                Toast.makeText(this, "Bookings", Toast.LENGTH_SHORT).show();
+                break;
+            case "Support":
+                Toast.makeText(this, "Support", Toast.LENGTH_SHORT).show();
+                break;
+            case "Share":
+                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+                break;
+            case "Login":
+                LoginFragment l = new LoginFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, l).commit();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
