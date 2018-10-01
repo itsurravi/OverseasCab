@@ -1,5 +1,6 @@
 package com.overseascab.overseascab.Activities;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,11 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.overseascab.overseascab.Fragments.BookingFragment;
 import com.overseascab.overseascab.Fragments.LoginFragment;
+import com.overseascab.overseascab.Fragments.OneWay;
 import com.overseascab.overseascab.R;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OneWay.OnFragmentInteractionListener {
 
     Toolbar toolbar;
 
@@ -68,6 +71,8 @@ public class HomeActivity extends AppCompatActivity
         {
             case "BOOKINGS":
                 toolbar.setTitle("BOOKINGS");
+                BookingFragment b = new BookingFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, b).commit();
                 Toast.makeText(this, "Bookings", Toast.LENGTH_SHORT).show();
                 break;
             case "SHARE":
@@ -84,5 +89,10 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
