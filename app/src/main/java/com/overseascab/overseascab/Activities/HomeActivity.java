@@ -1,4 +1,4 @@
-package com.overseascab.overseascab;
+package com.overseascab.overseascab.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,16 +11,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.overseascab.overseascab.Fragments.LoginFragment;
+import com.overseascab.overseascab.R;
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        //to be change according to login
+        toolbar.setTitle("Login");
+        setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -33,13 +40,13 @@ public class HomeActivity extends AppCompatActivity
 
         //Dynamic menu on navigationview
         Menu m = navigationView.getMenu();
-        m.add("Bookings");
-        m.add("Support");
-        m.add("Share");
-        m.add("Login");
+        m.add("BOOKINGS");
+        m.add("SHARE");
+        m.add("LOGIN");
+
 
         //set perticular item to be open from navigationview menu at startup
-        onNavigationItemSelected(navigationView.getMenu().getItem(3));
+        onNavigationItemSelected(navigationView.getMenu().getItem(2));
     }
 
     @Override
@@ -59,16 +66,16 @@ public class HomeActivity extends AppCompatActivity
         String name = item.getTitle().toString();
         switch (name)
         {
-            case "Bookings":
+            case "BOOKINGS":
+                toolbar.setTitle("BOOKINGS");
                 Toast.makeText(this, "Bookings", Toast.LENGTH_SHORT).show();
                 break;
-            case "Support":
-                Toast.makeText(this, "Support", Toast.LENGTH_SHORT).show();
-                break;
-            case "Share":
+            case "SHARE":
+                toolbar.setTitle("SHARE");
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
                 break;
-            case "Login":
+            case "LOGIN":
+                toolbar.setTitle("LOGIN");
                 LoginFragment l = new LoginFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, l).commit();
                 break;

@@ -1,4 +1,4 @@
-package com.overseascab.overseascab;
+package com.overseascab.overseascab.Activities;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+
+import com.overseascab.overseascab.R;
 
 public class SplashActivity extends AppCompatActivity {
 

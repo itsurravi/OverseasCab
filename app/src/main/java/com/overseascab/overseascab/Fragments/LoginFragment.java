@@ -1,6 +1,7 @@
-package com.overseascab.overseascab;
+package com.overseascab.overseascab.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,13 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.overseascab.overseascab.Activities.SignUpActivity;
+import com.overseascab.overseascab.R;
 
 
 public class LoginFragment extends Fragment implements View.OnClickListener{
 
     EditText email, ps;
     Button login;
-    TextView signup;
+    TextView signup, forget;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -37,12 +42,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         ps = v.findViewById(R.id.password);
         login = v.findViewById(R.id.login);
         signup = v.findViewById(R.id.signup);
-
+//        forget = v.findViewById(R.id.forget);
 
 
         login.setOnClickListener(this);
         signup.setOnClickListener(this);
-
+//        forget.setOnClickListener(this);
         return v;
     }
 
@@ -55,11 +60,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             /*
             * Need to call API for login.
             * */
+            Toast.makeText(getContext(), em+"\n"+psw, Toast.LENGTH_SHORT).show();
         }
         if(v==signup)
         {
-
+            startActivity(new Intent(getContext(), SignUpActivity.class));
         }
+//        if(v==forget)
+//        {
+//
+//        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
