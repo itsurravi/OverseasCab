@@ -74,11 +74,11 @@ public class BookingFragment extends Fragment {
             switch (position)
             {
                 case 0:
-                    return new OneWay().newInstance("OneWay", "1");
+                    return new OneWay()/*.newInstance("OneWay", "1")*/;
                 case 1:
                     return new TwoWay()/*.newInstance("OneWay", "1")*/;
                 default:
-                    return new OneWay().newInstance("OneWay", "1");
+                    return new OneWay()/*.newInstance("OneWay", "1")*/;
             }
         }
 

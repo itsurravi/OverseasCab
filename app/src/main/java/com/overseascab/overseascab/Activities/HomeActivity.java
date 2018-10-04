@@ -18,7 +18,7 @@ import com.overseascab.overseascab.Fragments.OneWay;
 import com.overseascab.overseascab.R;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OneWay.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
 
@@ -89,10 +89,5 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }

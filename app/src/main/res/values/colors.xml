@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#ffbc3e</color>
     <color name="colorAccent">#f53e3e</color>
     <color name="navigation_back">#242422</color>
+    <color name="b_n_icon">#c4c4c4</color>
+    <color name="b_n_icon_selected">#f53e3e</color>
 </resources>

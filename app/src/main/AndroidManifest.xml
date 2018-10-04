@@ -21,9 +21,9 @@
         </activity>
         <activity
             android:name=".Activities.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-
-        <activity android:name=".Activities.SignUpActivity"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".Activities.SignUpActivity" />
+        <activity android:name=".Activities.VehiclesActivity"></activity>
     </application>
 
 </manifest>
