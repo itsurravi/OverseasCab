@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.overseascab.overseascab.Models.Vehicles;
 import com.overseascab.overseascab.R;
 
@@ -19,9 +21,23 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.Holder> 
     List<Vehicles> vehicles;
     LayoutInflater inflater;
 
+    private OnItemClickListener onClick;
+
+    public interface OnItemClickListener
+    {
+        void onItemClick(int position);
+    }
+
+    public void setOnClick(OnItemClickListener onClick)
+    {
+        this.onClick=onClick;
+    }
+
+    Context c;
     public VehicleAdapter(Context c, List<Vehicles> vehicles) {
         inflater = LayoutInflater.from(c);
         this.vehicles = vehicles;
+        this.c=c;
     }
 
     @NonNull
@@ -33,13 +49,27 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.Holder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
-        holder.car_name.setText(vehicles.get(position).getCar_name());
-        holder.car_distance.setText(vehicles.get(position).getDistance());
-        holder.car_time.setText(vehicles.get(position).getTime());
-        holder.total_fare.setText(vehicles.get(position).getT_fare());
-        holder.basic_fare.setText(vehicles.get(position).getB_fare());
-//        holder.car_pic.setIm(vehicles.get(position).getTime());
+    public void onBindViewHolder(@NonNull Holder holder, final int position) {
+        holder.car_name.setText(vehicles.get(position).getCarname());
+        holder.basedistance.setText(vehicles.get(position).getBasedistance());
+        holder.seatingcap.setText(vehicles.get(position).getSeatingcap());
+        holder.baseprice.setText(vehicles.get(position).getBaseprice());
+        holder.unitdistance.setText(vehicles.get(position).getUnitdistance());
+        String book = vehicles.get(position).getBooked();
+        Integer in = Integer.parseInt(book);
+        if(in==1)
+        {
+            holder.booked.setVisibility(View.VISIBLE);
+        }
+
+        Glide.with(c).load(vehicles.get(position).getCarimage()).into(holder.car_pic);
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -47,19 +77,22 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.Holder> 
         return vehicles.size();
     }
 
-    class Holder extends RecyclerView.ViewHolder{
+    public static class Holder extends RecyclerView.ViewHolder{
 
-        ImageView car_pic;
-        TextView car_name, car_distance, car_time, total_fare, basic_fare;
+        RelativeLayout layout;
+        ImageView car_pic, booked;
+        TextView car_name, basedistance, seatingcap, baseprice, unitdistance;
 
         public Holder(View itemView) {
             super(itemView);
             car_pic = (ImageView)itemView.findViewById(R.id.pic);
+            booked = (ImageView)itemView.findViewById(R.id.booked);
             car_name = (TextView)itemView.findViewById(R.id.car_name);
-            car_distance = (TextView)itemView.findViewById(R.id.ride);
-            car_time = (TextView)itemView.findViewById(R.id.time);
-            total_fare = (TextView)itemView.findViewById(R.id.total_fare);
-            basic_fare = (TextView)itemView.findViewById(R.id.basic_fare);
+            basedistance = (TextView)itemView.findViewById(R.id.basedistance);
+            seatingcap = (TextView)itemView.findViewById(R.id.seatingcap);
+            baseprice = (TextView)itemView.findViewById(R.id.baseprice);
+            unitdistance = (TextView)itemView.findViewById(R.id.unitdistance);
+            layout = (RelativeLayout)itemView.findViewById(R.id.r_layout);
         }
     }
 }

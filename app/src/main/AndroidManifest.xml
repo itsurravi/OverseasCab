@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.overseascab.overseascab">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
@@ -20,10 +23,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".Activities.SignUpActivity" />
-        <activity android:name=".Activities.VehiclesActivity"></activity>
+        <activity android:screenOrientation="portrait"
+            android:name=".Activities.SignUpActivity" />
+        <activity android:screenOrientation="portrait"
+            android:name=".Activities.VehiclesActivity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.overseascab.overseascab.Activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,23 +11,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.overseascab.overseascab.Fragments.BookingFragment;
 import com.overseascab.overseascab.Fragments.LoginFragment;
 import com.overseascab.overseascab.Fragments.OneWay;
+import com.overseascab.overseascab.PrefManager;
 import com.overseascab.overseascab.R;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
+    TextView email;
+    PrefManager p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
 
         //to be change according to login
         toolbar.setTitle("Login");
@@ -41,15 +48,31 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Dynamic menu on navigationview
-        Menu m = navigationView.getMenu();
-        m.add("BOOKINGS");
-        m.add("SHARE");
-        m.add("LOGIN");
+        View headerView = navigationView.getHeaderView(0);
+        email = (TextView)headerView.findViewById(R.id.textView);
+
+        p = new PrefManager(this);
+
+        if(p.isLoggedIn()) {
+            email.setText(p.getEmail());
+//            Toast.makeText(this, ""+p.getEmail(), Toast.LENGTH_SHORT).show();
+            Menu m = navigationView.getMenu();
+            m.add("BOOKINGS");
+            m.add("SHARE");
+            m.add("LOG OUT");
+            onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        }
+        else {
+            //Dynamic menu on navigationview
+            Menu m = navigationView.getMenu();
+            m.add("BOOKINGS");
+            m.add("SHARE");
+            m.add("LOGIN");
 
 
-        //set perticular item to be open from navigationview menu at startup
-        onNavigationItemSelected(navigationView.getMenu().getItem(2));
+            //set perticular item to be open from navigationview menu at startup
+            onNavigationItemSelected(navigationView.getMenu().getItem(2));
+        }
     }
 
     @Override
@@ -83,6 +106,11 @@ public class HomeActivity extends AppCompatActivity
                 toolbar.setTitle("LOGIN");
                 LoginFragment l = new LoginFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, l).commit();
+                break;
+            case "LOG OUT":
+                p.logout();
+                finish();
+                startActivity(new Intent(this, HomeActivity.class));
                 break;
         }
 

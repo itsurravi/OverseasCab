@@ -37,13 +37,12 @@ public class BookingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_booking, container, false);
-//        View view = (View)container.getParent();
         t = (TabLayout)v.findViewById(R.id.tab);
         vp= (ViewPager)v.findViewById(R.id.viewPager);
 
         p = new Pager(getFragmentManager());
+
         vp.setAdapter(p);
-//        t.setupWithViewPager(vp);
 
         t.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(vp));
         vp.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(t));

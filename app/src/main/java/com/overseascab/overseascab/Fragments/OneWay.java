@@ -46,13 +46,11 @@ public class OneWay extends Fragment {
                         case R.id.p2p:
                             f = new PointFragment();
                             loadFragment(f);
-//                            Toast.makeText(getContext(), "point to point", Toast.LENGTH_SHORT).show();
                             return true;
 
                         case R.id.hrly:
                             f = new HourlyFragment();
                             loadFragment(f);
-//                            Toast.makeText(getContext(), "Hourly", Toast.LENGTH_SHORT).show();
                             return true;
                     }
                     return false;

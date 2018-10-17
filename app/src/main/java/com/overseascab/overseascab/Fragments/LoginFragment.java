@@ -1,5 +1,6 @@
 package com.overseascab.overseascab.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,11 +14,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.overseascab.overseascab.Activities.HomeActivity;
 import com.overseascab.overseascab.Activities.SignUpActivity;
+import com.overseascab.overseascab.Links;
+import com.overseascab.overseascab.PrefManager;
 import com.overseascab.overseascab.R;
 
+import java.util.HashMap;
+import java.util.Map;
 
-public class LoginFragment extends Fragment implements View.OnClickListener{
+
+public class LoginFragment extends Fragment implements View.OnClickListener {
 
     EditText email, ps;
     Button login;
@@ -53,23 +67,60 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(v==login)
-        {
+        if (v == login) {
             String em = email.getText().toString();
             String psw = ps.getText().toString();
-            /*
-            * Need to call API for login.
-            * */
-            Toast.makeText(getContext(), em+"\n"+psw, Toast.LENGTH_SHORT).show();
+            user_login(em, psw);
+//            Toast.makeText(getContext(), em+"\n"+psw, Toast.LENGTH_SHORT).show();
         }
-        if(v==signup)
-        {
+        if (v == signup) {
             startActivity(new Intent(getContext(), SignUpActivity.class));
         }
-//        if(v==forget)
-//        {
-//
-//        }
+    }
+
+    private void user_login(final String em, final String psw) {
+        final ProgressDialog d = new ProgressDialog(getContext());
+        d.setCancelable(false);
+        d.setMessage("Logging In...");
+        d.show();
+
+        StringRequest r = new StringRequest(Request.Method.POST, Links.login,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if(response.contains("Login Successfull")) {
+                            PrefManager p = new PrefManager(getContext());
+                            p.setLogin(em, psw, true);
+                            d.dismiss();
+                            startActivity(new Intent(getContext(), HomeActivity.class));
+                            getActivity().finish();
+                            Toast.makeText(getContext(), "" + response, Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getContext(), "Please Try Again", Toast.LENGTH_SHORT).show();
+                            d.dismiss();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "Check Internet and Try Again", Toast.LENGTH_SHORT).show();
+                        d.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> m = new HashMap<>();
+                m.put("email", em);
+                m.put("psw", psw);
+                return m;
+            }
+        };
+
+        RequestQueue rq = Volley.newRequestQueue(getContext());
+        rq.add(r);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

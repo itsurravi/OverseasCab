@@ -1,5 +1,6 @@
 package com.overseascab.overseascab.Activities;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -8,8 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.overseascab.overseascab.Links;
 import com.overseascab.overseascab.R;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -52,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void register() {
-        String u_name, f_name, l_name, email, psw, cpsw, phone;
+        final String u_name, f_name, l_name, email, psw, cpsw, phone;
         u_name = un.getText().toString().trim();
         f_name = fn.getText().toString().trim();
         l_name = ln.getText().toString().trim();
@@ -73,9 +84,47 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (pn.length() != 10) {
             pn.setError("Phone Number INVALID");
         } else {
-            /*
-            * Sign up to call here
-            * */
+
+            final ProgressDialog d = new ProgressDialog(this);
+            d.setMessage("Please Wait");
+            d.setCancelable(false);
+            d.show();
+            StringRequest r = new StringRequest(Request.Method.POST, Links.signup,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            d.dismiss();
+                            if(response.contains("Registration Successfull")) {
+                                Toast.makeText(SignUpActivity.this, "" + response, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else{
+                                Toast.makeText(SignUpActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(SignUpActivity.this, "Check Internet and Try Again", Toast.LENGTH_SHORT).show();
+                            d.dismiss();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> m = new HashMap<>();
+                    m.put("username", u_name);
+                    m.put("email", email);
+                    m.put("fname", f_name);
+                    m.put("lname", l_name);
+                    m.put("psw", psw);
+                    m.put("mobile", phone);
+                    return m;
+                }
+            };
+
+            RequestQueue rq = Volley.newRequestQueue(this);
+            rq.add(r);
         }
 
     }

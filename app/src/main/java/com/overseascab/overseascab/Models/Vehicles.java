@@ -2,43 +2,55 @@ package com.overseascab.overseascab.Models;
 
 public class Vehicles {
 
-    String car_name;
-    String car_image;
-    String distance;
-    String time;
-    String t_fare;
-    String b_fare;
+    String id;
+    String carname;
+    String carimage;
+    String basedistance;
+    String baseprice;
+    String unitdistance;
+    String seatingcap;
+    String booked;
 
-    public Vehicles(String car_name, String car_image, String distance, String time, String t_fare, String b_fare) {
-        this.car_name = car_name;
-        this.distance = distance;
-        this.time = time;
-        this.t_fare = t_fare;
-        this.b_fare = b_fare;
-        this.car_image = car_image;
+    public Vehicles(String id, String carname, String carimage, String basedistance, String baseprice, String unitdistance, String seatingcap, String booked) {
+        this.id = id;
+        this.carname = carname;
+        this.carimage = carimage;
+        this.basedistance = basedistance;
+        this.baseprice = baseprice;
+        this.unitdistance = unitdistance;
+        this.seatingcap = seatingcap;
+        this.booked = booked;
     }
 
-    public String getCar_name() {
-        return car_name;
+    public String getId() {
+        return id;
     }
 
-    public String getDistance() {
-        return distance;
+    public String getCarname() {
+        return carname;
     }
 
-    public String getTime() {
-        return time;
+    public String getCarimage() {
+        return carimage;
     }
 
-    public String getT_fare() {
-        return t_fare;
+    public String getBasedistance() {
+        return basedistance;
     }
 
-    public String getB_fare() {
-        return b_fare;
+    public String getBaseprice() {
+        return baseprice;
     }
 
-    public String getCar_image() {
-        return car_image;
+    public String getUnitdistance() {
+        return unitdistance;
+    }
+
+    public String getSeatingcap() {
+        return seatingcap;
+    }
+
+    public String getBooked() {
+        return booked;
     }
 }

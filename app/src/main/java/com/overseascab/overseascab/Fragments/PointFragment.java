@@ -65,10 +65,23 @@ public class PointFragment extends Fragment {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String d,t;
+                String d,t, pl, dl;
                 d = pdate.getText().toString();
                 t = ptime.getText().toString();
-                startActivity(new Intent(getContext(), VehiclesActivity.class));
+                pl = ppoint.getText().toString();
+                dl = dpoint.getText().toString();
+                if(!d.isEmpty() || !t.isEmpty() || !pl.isEmpty() || !dl.isEmpty()) {
+                    Intent i = new Intent(getContext(), VehiclesActivity.class);
+                    i.putExtra("pickup_location", pl);
+                    i.putExtra("drop_location", dl);
+                    i.putExtra("date", d);
+                    i.putExtra("time", t);
+                    startActivity(i);
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Please Select All Fields", Toast.LENGTH_SHORT).show();
+                }
 //                Toast.makeText(getContext(), d+" \n "+t, Toast.LENGTH_SHORT).show();
             }
         });
