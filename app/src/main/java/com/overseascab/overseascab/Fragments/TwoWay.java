@@ -77,6 +77,10 @@ public class TwoWay extends Fragment {
                     i.putExtra("date", d);
                     i.putExtra("time", t);
                     startActivity(i);
+                    pdate.setText("");
+                    ptime.setText("");
+                    ppoint.setText("");
+                    dpoint.setText("");
                 }
                 else
                 {

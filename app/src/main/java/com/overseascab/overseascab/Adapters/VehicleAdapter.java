@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.overseascab.overseascab.Models.Vehicles;
@@ -20,12 +21,14 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.Holder> 
 
     List<Vehicles> vehicles;
     LayoutInflater inflater;
+    Context c;
 
     private OnItemClickListener onClick;
 
     public interface OnItemClickListener
     {
         void onItemClick(int position);
+
     }
 
     public void setOnClick(OnItemClickListener onClick)
@@ -33,7 +36,6 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.Holder> 
         this.onClick=onClick;
     }
 
-    Context c;
     public VehicleAdapter(Context c, List<Vehicles> vehicles) {
         inflater = LayoutInflater.from(c);
         this.vehicles = vehicles;
@@ -49,7 +51,7 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.Holder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, final int position) {
+    public void onBindViewHolder(@NonNull final Holder holder, final int position) {
         holder.car_name.setText(vehicles.get(position).getCarname());
         holder.basedistance.setText(vehicles.get(position).getBasedistance());
         holder.seatingcap.setText(vehicles.get(position).getSeatingcap());
@@ -67,9 +69,17 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.Holder> 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClick.onItemClick(position);
+                if(holder.booked.getVisibility()==View.VISIBLE)
+                {
+                    Toast.makeText(c, "Booking Not Possible", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    onClick.onItemClick(position);
+                }
             }
         });
+        holder.setIsRecyclable(false);
     }
 
     @Override

@@ -70,7 +70,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (v == login) {
             String em = email.getText().toString();
             String psw = ps.getText().toString();
-            user_login(em, psw);
+            if(!(em.isEmpty() || psw.isEmpty())) {
+                user_login(em, psw);
+            }
+            else
+            {
+                Toast.makeText(getContext(), "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+            }
 //            Toast.makeText(getContext(), em+"\n"+psw, Toast.LENGTH_SHORT).show();
         }
         if (v == signup) {
@@ -98,7 +104,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         }
                         else
                         {
-                            Toast.makeText(getContext(), "Please Try Again", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Wrong Email or Password", Toast.LENGTH_SHORT).show();
                             d.dismiss();
                         }
                     }

@@ -65,7 +65,7 @@ public class HourlyFragment extends Fragment {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String d,t, pl, dl;
+                String d,t, pl;
                 d = pdate.getText().toString();
                 t = ptime.getText().toString();
                 pl = ppoint.getText().toString();
@@ -75,6 +75,9 @@ public class HourlyFragment extends Fragment {
                     i.putExtra("date", d);
                     i.putExtra("time", t);
                     startActivity(i);
+                    pdate.setText("");
+                    ptime.setText("");
+                    ppoint.setText("");
                 }
                 else
                 {

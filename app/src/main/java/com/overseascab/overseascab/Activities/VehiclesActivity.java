@@ -1,6 +1,7 @@
 package com.overseascab.overseascab.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,6 +19,7 @@ import com.overseascab.overseascab.Adapters.VehicleAdapter;
 import com.overseascab.overseascab.Links;
 import com.overseascab.overseascab.Models.Vehicles;
 import com.overseascab.overseascab.ParserJSON;
+import com.overseascab.overseascab.PrefManager;
 import com.overseascab.overseascab.R;
 
 import java.util.ArrayList;
@@ -30,11 +32,21 @@ public class VehiclesActivity extends AppCompatActivity implements VehicleAdapte
     VehicleAdapter v;
     ProgressDialog d;
 
+    List<Vehicles> l;
+
     String pickup_location, drop_location, date, time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PrefManager m = new PrefManager(this);
+        if(!m.isLoggedIn())
+        {
+            finish();
+            Toast.makeText(this, "Please Login First", Toast.LENGTH_SHORT).show();
+        }
+
         setContentView(R.layout.activity_vehicles);
 
         setTitle("Select Vehicle");
@@ -61,8 +73,6 @@ public class VehiclesActivity extends AppCompatActivity implements VehicleAdapte
 
         d = new ProgressDialog(this);
 
-        fetchData();
-
         LinearLayoutManager lm = new LinearLayoutManager(this);
         lm.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -70,6 +80,12 @@ public class VehiclesActivity extends AppCompatActivity implements VehicleAdapte
 
         rv.setItemAnimator(new DefaultItemAnimator());
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        fetchData();
     }
 
     public void fetchData() {
@@ -96,7 +112,7 @@ public class VehiclesActivity extends AppCompatActivity implements VehicleAdapte
 
     private void showJson(String response) {
         ParserJSON j = new ParserJSON(response);
-        List<Vehicles> l = j.parseJSON();
+        l = j.parseJSON();
         v = new VehicleAdapter(this, l);
         rv.setAdapter(v);
         v.setOnClick(this);
@@ -111,6 +127,13 @@ public class VehiclesActivity extends AppCompatActivity implements VehicleAdapte
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, ConfirmBookingActivity.class);
+        i.putExtra("carname", l.get(position).getCarname());
+        i.putExtra("carimage", l.get(position).getCarimage());
+        i.putExtra("pick", pickup_location);
+        i.putExtra("date_time", date+" "+time);
+        i.putExtra("position", String.valueOf(position+1));
+        startActivity(i);
+        finish();
     }
 }

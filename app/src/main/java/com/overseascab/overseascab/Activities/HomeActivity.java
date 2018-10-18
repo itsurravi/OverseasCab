@@ -96,11 +96,11 @@ public class HomeActivity extends AppCompatActivity
                 toolbar.setTitle("BOOKINGS");
                 BookingFragment b = new BookingFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, b).commit();
-                Toast.makeText(this, "Bookings", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Bookings", Toast.LENGTH_SHORT).show();
                 break;
             case "SHARE":
                 toolbar.setTitle("SHARE");
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
                 break;
             case "LOGIN":
                 toolbar.setTitle("LOGIN");

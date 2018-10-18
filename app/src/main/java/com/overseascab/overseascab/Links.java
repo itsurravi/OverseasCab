@@ -8,6 +8,7 @@ public class Links {
     public static String signup = base + "SignUp.php";
     public static String login = base + "logIn.php";
     public static String updatebooking = base + "updateBooking.php";
+    public static String userData = base + "userdata.php";
 
 
 }
